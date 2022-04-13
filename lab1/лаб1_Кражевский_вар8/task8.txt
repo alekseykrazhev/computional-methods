@@ -1,0 +1,33 @@
+Average condition number: 4.69947
+Max condition number: 4.8754
+Min condition number: 4.549
+
+Average time for inverse matrix: 353848 microseconds
+
+Max norm of difference for Gauss method: 1.10273
+Min norm of difference for Gauss method: 0.617847
+Average norm of difference for Gauss method: 0.785168
+Max norm of difference for LUP method: 1.10273
+Min norm of difference for LUP method: 0.617751
+Average norm of difference for LUP method: 0.785201
+Max norm of difference for Sqrt method: 1.07219
+Min norm of difference for Sqrt method: 0.519061
+Average norm of difference for Sqrt method: 0.713179
+Max norm of difference for Relaxation method: 1.10273
+Min norm of difference for Relaxation method: 0.617751
+Average norm of difference for Relaxation method: 0.785201
+
+Average time for Gauss method: 142786 microseconds
+
+Average time for LUP method: 153485 microseconds
+
+Average time for LUP_solve method: 155061 microseconds
+
+Average time for Sqrt_solve method: 30082.3 microseconds
+
+Average time for Relaxation_solve method: 6988.23 microseconds
+
+Max iterations for Relaxation_solve method: 13
+Min iterations for Relaxation_solve method: 12
+Average iterations for Relaxation_solve method: 12.71
+

@@ -7,13 +7,19 @@
 #include <chrono>
 using namespace std::chrono;
 
+double frand(double fMin, double fMax)
+{
+    double f = (double)rand() / RAND_MAX;
+    return fMin + f * (fMax - fMin);
+}
+
 void FillUpper(std::vector<std::vector<double>> &v)
 {
     for (int i = 0; i < v.size(); i++)
     {
         for (int j = i; j < v[i].size(); j++)
         {
-            v[i][j] = rand() % 8 - 4; // [-4, 4]
+            v[i][j] = frand(-4, 4); // [-4, 4]
         }
     }
 }
@@ -33,12 +39,12 @@ void FillDiagonal(std::vector<std::vector<double>> &v)
 {
     for (int i = 0; i < v.size(); i++)
     {
-        int sum = 0;
+        double sum = 0;
         for (int j = 0; j < v[i].size(); j++)
         {
             if (i != j)
             {
-                sum += abs(v[i][j]);
+                sum += fabs(v[i][j]);
             }
         }
         v[i][i] = sum + 1;
@@ -83,7 +89,7 @@ void FillVector(std::vector<double> &v)
 {
     for (int i = 0; i < v.size(); i++)
     {
-        v[i] = rand() % 8 - 4; // [-4, 4]
+        v[i] = frand(-4, 4); // [-4, 4]
     }
 }
 
@@ -105,7 +111,7 @@ void MatrixMultiply(const std::vector<std::vector<double>> &a,
     {
         for (int j = 0; j < b.size(); j++)
         {
-            int sum = 0;
+            double sum = 0;
             for (int k = 0; k < a[0].size(); k++)
             {
                 sum += a[i][k] * b[k];
@@ -134,7 +140,7 @@ void MatrixMultiply(const std::vector<std::vector<double>> &a,
     {
         for (int j = 0; j < b[0].size(); j++)
         {
-            int sum = 0;
+            double sum = 0;
             for (int k = 0; k < a[0].size(); k++)
             {
                 sum += a[i][k] * b[k][j];
@@ -144,6 +150,7 @@ void MatrixMultiply(const std::vector<std::vector<double>> &a,
     }
 }
 
+// find inverse matrix using Gauss-Jordan elimination
 std::vector<std::vector<double>> InverseMatrixGaussianElimination(const std::vector<std::vector<double>> &a)
 {
     std::vector<std::vector<double>> b(a.size(), std::vector<double>(a.size()));
@@ -200,6 +207,7 @@ std::vector<std::vector<double>> InverseMatrixGaussianElimination(const std::vec
     return b;
 }
 
+// get norm of matrix
 double FindNorm(const std::vector<std::vector<double>> &a)
 {
     double max = -1;
@@ -225,12 +233,14 @@ double FindNorm(const std::vector<std::vector<double>> &a)
     return max;
 }
 
+// get condition number of matrix
 double ConditionNumber(const std::vector<std::vector<double>> &a)
 {
     std::vector<std::vector<double>> inverse_matrix = InverseMatrixGaussianElimination(a);
     return FindNorm(a) * FindNorm(inverse_matrix);
 }
 
+// solve Ax = b using Gaussian elimination and return x
 std::vector<double> SolveMatrixGaussianElimination(const std::vector<std::vector<double>> &a,
                                                    const std::vector<double> &b)
 {
@@ -305,6 +315,7 @@ std::vector<double> SolveMatrixGaussianElimination(const std::vector<std::vector
     return x;
 }
 
+// get LUP decomposition of matrix
 void LUP(std::vector<std::vector<double>> a, std::vector<std::vector<double>> &l,
          std::vector<std::vector<double>> &u, std::vector<double> &p)
 {
@@ -397,6 +408,7 @@ std::vector<double> LUP_solve(const std::vector<std::vector<double>> &a, const s
     return x;
 }
 
+// get transpose of matrix
 std::vector<std::vector<double>> Transpose(const std::vector<std::vector<double>> &a)
 {
     int n = a.size();
@@ -493,7 +505,7 @@ std::vector<double> Sqrt_solve(const std::vector<std::vector<double>> &a, const 
 }
 
 // get LDLT decomposition of a matrix
-void LDLT(const std::vector<std::vector<double>> &a, std::vector<std::vector<double>> &l, std::vector<double> &d)
+bool LDLT(const std::vector<std::vector<double>> &a, std::vector<std::vector<double>> &l, std::vector<double> &d)
 {
     int n = a.size();
     double sum = 0;
@@ -511,7 +523,7 @@ void LDLT(const std::vector<std::vector<double>> &a, std::vector<std::vector<dou
                 if (sum <= 0)
                 {
                     std::cout << "Error: matrix is not positive definite" << std::endl;
-                    exit(1);
+                    return false;
                 }
                 d[i] = sum;
                 l[i][i] = 1;
@@ -522,6 +534,7 @@ void LDLT(const std::vector<std::vector<double>> &a, std::vector<std::vector<dou
             }
         }
     }
+    return true;
 }
 
 // multiply matrix by vector
@@ -609,9 +622,24 @@ std::vector<double> Relaxation_solve(const std::vector<std::vector<double>> &a, 
     return x;
 }
 
+// find cube norm of a vector
+double Norm(const std::vector<double> &a)
+{
+    int n = a.size();
+    double max = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        if (fabs(a[i]) > max)
+        {
+            max = fabs(a[i]);
+        }
+    }
+    return max;
+}
+
 int main()
 {
-    const int size = 5;
+    const int size = 256;
     std::vector<std::vector<double>> matrix(size, std::vector<double>(size));
     std::vector<double> vec(size);
     std::vector<double> mult(size);
@@ -686,9 +714,14 @@ int main()
 
     std::cout << "\tEight task\n";
     double max = 0, sum = 0, min = 1000000000, time = 0, time1 = 0, time2 = 0, time3 = 0, time4 = 0, time5 = 0;
-    double max_r = 0, min_r = 0, sum_r = 0;
+    double max_r = 0, min_r = 10000000, sum_r = 0;
+    double max_gauss = 0, min_gauss = 10000000, sum_gauss = 0;
+    double max_sqrt = 0, min_sqrt = 10000000, sum_sqrt = 0;
+    double max_lup = 0, min_lup = 10000000, sum_lup = 0;
+    double max_relax = 0, min_relax = 10000000, sum_relax = 0;
 
     std::ofstream out("matrix_max_condition_number.txt");
+    std::vector<std::vector<double>> matrix_max_cond_num(size, std::vector<double>(size));
 
     for (int i = 0; i < 100; ++i)
     {
@@ -698,6 +731,9 @@ int main()
         if (cn > max)
         {
             max = cn;
+            out.close();
+            out.open("matrix_max_condition_number.txt", std::ios::out | std::ios::in);
+            matrix_max_cond_num = matrix;
             PrintMatrix(matrix, out);
         }
         if (cn < min)
@@ -746,26 +782,263 @@ int main()
             max_r = count;
         if (count < min_r)
             min_r = count;
-        
-        std::vector<double> diff_gauss = VectorSubtract(vec, gauss_solution);
-        std::vector<double> diff_lup = VectorSubtract(vec, lup_solution);
-        std::vector<double> diff_sqrt = VectorSubtract(vec, sqrt_solve);
-        std::vector<double> diff_relax = VectorSubtract(vec, xx);
+
+
+        double gauss_norm = Norm(VectorSubtract(vec, gauss_solution)); // find norm of x_gauss - y
+
+        if (gauss_norm > max_gauss)
+            max_gauss = gauss_norm; // find max norm of difference
+        if (gauss_norm < min_gauss)
+            min_gauss = gauss_norm; // find min norm of difference
+        sum_gauss += gauss_norm;    // sum norm of difference
+
+        double lup_norm = Norm(VectorSubtract(vec, lup_solution)); // find norm of x_lup - y
+
+        if (lup_norm > max_lup)
+            max_lup = lup_norm; // find max norm of difference
+        if (lup_norm < min_lup)
+            min_lup = lup_norm; // find min norm of difference
+        sum_lup += lup_norm;    // sum norm of difference
+
+        double sqrt_norm = Norm(VectorSubtract(vec, sqrt_solve)); // find norm of x_sqrt - y
+
+        if (sqrt_norm > max_sqrt)
+            max_sqrt = sqrt_norm; // find max norm of difference
+        if (sqrt_norm < min_sqrt)
+            min_sqrt = sqrt_norm; // find min norm of difference
+        sum_sqrt += sqrt_norm;    // sum norm of difference
+
+        double relax_norm = Norm(VectorSubtract(vec, xx)); // find norm of x_relax - y
+
+        if (relax_norm > max_relax)
+            max_relax = relax_norm; // find max norm of difference
+        if (relax_norm < min_relax)
+            min_relax = relax_norm; // find min norm of difference
+        sum_relax += relax_norm;    // sum norm of difference
     }
     out.close();
 
-    std::cout << "Average condition number: " << sum / 100 << std::endl;
-    std::cout << "Max condition number: " << max << std::endl;
-    std::cout << "Min condition number: " << min << std::endl;
-    std::cout << "Average time for inverse matrix: " << time / 100 << " microseconds" << std::endl;
-    std::cout << "Average time for Gauss method: " << time1 / 100 << " microseconds" << std::endl;
-    std::cout << "Average time for LUP method: " << time2 / 100 << " microseconds" << std::endl;
-    std::cout << "Average time for LUP_solve method: " << time3 / 100 << " microseconds" << std::endl;
-    std::cout << "Average time for Sqrt_solve method: " << time4 / 100 << " microseconds" << std::endl;
-    std::cout << "Average time for Relaxation_solve method: " << time5 / 100 << " microseconds" << std::endl;
-    std::cout << "Max iterations for Relaxation_solve method: " << max_r << std::endl;
-    std::cout << "Min iterations for Relaxation_solve method: " << min_r << std::endl;
-    std::cout << "Average iterations for Relaxation_solve method: " << sum_r / 100 << std::endl;
+    std::ofstream out1("task8.txt");
+    out1 << "Average condition number: " << sum / 100 << std::endl;
+    out1 << "Max condition number: " << max << std::endl;
+    out1 << "Min condition number: " << min << std::endl;
+    out1 << std::endl;
+
+    out1 << "Average time for inverse matrix: " << time / 100 << " microseconds" << std::endl
+         << std::endl;
+
+    out1 << "Max norm of difference for Gauss method: " << max_gauss << std::endl;
+    out1 << "Min norm of difference for Gauss method: " << min_gauss << std::endl;
+    out1 << "Average norm of difference for Gauss method: " << sum_gauss / 100 << std::endl;
+    out1 << "Max norm of difference for LUP method: " << max_lup << std::endl;
+    out1 << "Min norm of difference for LUP method: " << min_lup << std::endl;
+    out1 << "Average norm of difference for LUP method: " << sum_lup / 100 << std::endl;
+    out1 << "Max norm of difference for Sqrt method: " << max_sqrt << std::endl;
+    out1 << "Min norm of difference for Sqrt method: " << min_sqrt << std::endl;
+    out1 << "Average norm of difference for Sqrt method: " << sum_sqrt / 100 << std::endl;
+    out1 << "Max norm of difference for Relaxation method: " << max_relax << std::endl;
+    out1 << "Min norm of difference for Relaxation method: " << min_relax << std::endl;
+    out1 << "Average norm of difference for Relaxation method: " << sum_relax / 100 << std::endl;
+    out1 << std::endl;
+
+    out1 << "Average time for Gauss method: " << time1 / 100 << " microseconds" << std::endl
+         << std::endl;
+
+    out1 << "Average time for LUP method: " << time2 / 100 << " microseconds" << std::endl
+         << std::endl;
+
+    out1 << "Average time for LUP_solve method: " << time3 / 100 << " microseconds" << std::endl
+         << std::endl;
+
+    out1 << "Average time for Sqrt_solve method: " << time4 / 100 << " microseconds" << std::endl
+         << std::endl;
+
+    out1 << "Average time for Relaxation_solve method: " << time5 / 100 << " microseconds" << std::endl
+         << std::endl;
+
+    out1 << "Max iterations for Relaxation_solve method: " << max_r << std::endl;
+    out1 << "Min iterations for Relaxation_solve method: " << min_r << std::endl;
+    out1 << "Average iterations for Relaxation_solve method: " << sum_r / 100 << std::endl
+         << std::endl;
+    out1.close();
+
+    std::cout << "\tTask 9" << std::endl;
+    double N = 8;
+    std::vector<std::vector<double>> a1 = {{pow(N, 2) + 15, N - 1, -1, -2}, {N - 1, -15 - pow(N, 2), -N + 4, -4}, {-1, -N + 4, pow(N, 2) + 8, -N}, {-2, -4, -N, pow(N, 2) + 10}};
+
+    std::vector<std::vector<double>> a2_t = {{1, 1 + N, 2 + N, 3 + N, 4 + N, 5 + N, 6 + N, 7 + N},
+                                             {100 * N, 1000 * N, 10000 * N, 100000 * N, -1000 * N, -10000 * N, -100000 * N, 1},
+                                             {N, -1 + N, -2 + N, -3 + N, -4 + N, -5 + N, -6 + N, -7 + N},
+                                             {N - 1000, 10 * N - 1000, 100 * N - 1000, 1000 * N - 1000, 10000 * N - 1000, -N, -N + 1, -N + 2},
+                                             {-2 * N, 0, -1, -2, -3, -4, -5, -6},
+                                             {N - 2019, -N + 2020, N - 2021, -N + 2022, N - 2023, -N + 2024, N - 2025, -N + 2026},
+                                             {2 * N - 2000, 4 * N - 2005, 8 * N - 2010, 16 * N - 2015, 32 * N - 2020, 2019 * N, -2020 * N, 2021 * N},
+                                             {1020 - 2 * N, -2924 + 896 * N, 1212 + 9808 * N, -2736 + 98918 * N, 1014 - 11068 * N, -1523 - 8078 * N, 2625 - 102119 * N, -1327 + 1924 * N}};
+
+    std::vector<std::vector<double>> a2 = MatrixMultiply(Transpose(a2_t), a2_t);
+
+    std::cout << "For matrix A1:" << std::endl;
+    PrintMatrix(a1);
+    int size_a1 = a1.size();
+    std::vector<double> y_a1(size_a1);
+    FillVector(y_a1);
+    std::cout << "Vector y:" << std::endl;
+    PrintVector(y_a1);
+
+    std::vector<double> b_a1 = MatrixMultiply(a1, y_a1);
+    std::cout << "Vector b:" << std::endl;
+    PrintVector(b_a1);
+
+    std::cout << "Condition number for A1: " << ConditionNumber(a1) << std::endl;
+
+    std::cout << "Gauss for matrix A1:" << std::endl;
+    PrintVector(SolveMatrixGaussianElimination(a1, b_a1));
+
+    std::cout << "LUP for matrix A1:" << std::endl;
+    std::vector<std::vector<double>> l_a1(size_a1, std::vector<double>(size_a1)), u_a1(size_a1, std::vector<double>(size_a1));
+    std::vector<double> p_a1(size_a1);
+
+    LUP(a1, l_a1, u_a1, p_a1);
+    std::cout << "LUP decomposition:\n";
+    std::cout << "Matrix L:" << std::endl;
+    PrintMatrix(l_a1);
+    std::cout << "Matrix U:" << std::endl;
+    PrintMatrix(u_a1);
+    std::cout << "Vector P:" << std::endl;
+    PrintVector(p_a1);
+    std::cout << "Vector b (solution using LUP):" << std::endl;
+    PrintVector(LUP_solve(a1, b_a1));
+
+    std::cout << "Solution using square root method:" << std::endl;
+    PrintVector(Sqrt_solve(a1, b_a1));
+
+    std::cout << "LDLT decomposition:\n";
+    std::vector<std::vector<double>> l1_a1(size_a1, std::vector<double>(size_a1));
+    std::vector<double> d_a1(size_a1);
+    if (LDLT(a1, l1_a1, d_a1))
+    {
+        std::cout << "Matrix L:" << std::endl;
+        PrintMatrix(l1_a1);
+        std::cout << "Vector D (diagonal):" << std::endl;
+        PrintVector(d_a1);
+    }
+    else
+    {
+        std::cout << "Matrix is not positive definite" << std::endl
+                  << std::endl;
+    }
+
+    std::cout << "Solution using Relaxation method:" << std::endl;
+    PrintVector(Relaxation_solve(a1, b_a1, 1 - (8 / 40), count));
+
+    std::cout << "For matrix A2:" << std::endl;
+    PrintMatrix(a2);
+    int size_a2 = a2.size();
+    std::vector<double> y_a2(size_a2);
+    FillVector(y_a2);
+    std::cout << "Vector y:" << std::endl;
+    PrintVector(y_a2);
+
+    std::vector<double> b_a2 = MatrixMultiply(a2, y_a2);
+    std::cout << "Vector b:" << std::endl;
+    PrintVector(b_a2);
+
+    std::cout << "Condition number for A2: " << ConditionNumber(a2) << std::endl;
+
+    std::cout << "Gauss for matrix A2:" << std::endl;
+    PrintVector(SolveMatrixGaussianElimination(a2, b_a2));
+
+    std::cout << "LUP for matrix A2:" << std::endl;
+    std::vector<std::vector<double>> l_a2(size_a2, std::vector<double>(size_a2)), u_a2(size_a2, std::vector<double>(size_a2));
+    std::vector<double> p_a2(size_a2);
+
+    LUP(a2, l_a2, u_a2, p_a2);
+    std::cout << "LUP decomposition:\n";
+    std::cout << "Matrix L:" << std::endl;
+    PrintMatrix(l_a2);
+    std::cout << "Matrix U:" << std::endl;
+    PrintMatrix(u_a2);
+    std::cout << "Vector P:" << std::endl;
+    PrintVector(p_a2);
+    std::cout << "Vector b (solution using LUP):" << std::endl;
+    PrintVector(LUP_solve(a2, b_a2));
+
+    std::cout << "Solution using square root method:" << std::endl;
+    PrintVector(Sqrt_solve(a2, b_a2));
+
+    std::cout << "LDLT decomposition:\n";
+    std::vector<std::vector<double>> l1_a2(size_a2, std::vector<double>(size_a2));
+    std::vector<double> d_a2(size_a2);
+    if (LDLT(a2, l1_a2, d_a2))
+    {
+        std::cout << "Matrix L:" << std::endl;
+        PrintMatrix(l1_a2);
+        std::cout << "Vector D (diagonal):" << std::endl;
+        PrintVector(d_a2);
+    }
+    else
+    {
+        std::cout << "Matrix is not positive definite" << std::endl
+                  << std::endl;
+    }
+
+    std::cout << "Solution using Relaxation method:" << std::endl;
+    PrintVector(Relaxation_solve(a2, b_a2, 1 - (8 / 40), count));
+
+    std::cout << "\tTask 10:" << std::endl;
+    std::cout << "Investigate cases for matrix with max condition number:\n"
+              << std::endl;
+
+    std::vector<double> vec_for_cm(matrix_max_cond_num.size());
+    FillVector(vec_for_cm);
+
+    std::vector<double> solve_r = Relaxation_solve(matrix_max_cond_num, vec_for_cm, 1-(8/40), count);
+    for (int i = 0; i < 5; ++i)
+    {
+        for (int k = 0; k < matrix_max_cond_num.size(); ++k)
+        {
+            vec_for_cm[i] += 0.1;
+        }
+
+        std::vector<double> solution = Relaxation_solve(matrix_max_cond_num, vec_for_cm,  1-(8/40), count);
+        double diff_norm = Norm(VectorSubtract(solution, solve_r));
+        std::cout << "Norm for diff vector = " << diff_norm << std::endl;
+    }
+
+    std::cout << "\nFind errors for Relaxation method:\n" << std::endl;
+
+    std::cout << "Param = 0.8:\n";
+    std::vector<double> solve_1 = Relaxation_solve(matrix, vec_for_cm, 0.8, count);
+    for (int i = 0; i < 5; ++i)
+    {
+        FillVector(vec_for_cm);
+
+        std::vector<double> solution = Relaxation_solve(matrix_max_cond_num, vec_for_cm,  0.8, count);
+        double diff_norm = Norm(VectorSubtract(solution, solve_1));
+        std::cout << "Norm for diff vector = " << diff_norm << std::endl;
+    }
+
+    std::cout << "\nParam = 1.0\n";
+    solve_1 = Relaxation_solve(matrix, vec_for_cm, 1.0, count);
+    for (int i = 0; i < 5; ++i)
+    {
+        FillVector(vec_for_cm);
+
+        std::vector<double> solution = Relaxation_solve(matrix_max_cond_num, vec_for_cm,  1.0, count);
+        double diff_norm = Norm(VectorSubtract(solution, solve_1));
+        std::cout << "Norm for diff vector = " << diff_norm << std::endl;
+    }
+
+    std::cout << "\nParam = 1.2\n";
+    solve_1 = Relaxation_solve(matrix, vec_for_cm, 1.2, count);
+    for (int i = 0; i < 5; ++i)
+    {
+        FillVector(vec_for_cm);
+
+        std::vector<double> solution = Relaxation_solve(matrix_max_cond_num, vec_for_cm,  1.2, count);
+        double diff_norm = Norm(VectorSubtract(solution, solve_1));
+        std::cout << "Norm for diff vector = " << diff_norm << std::endl;
+    }
 
     return 0;
 }

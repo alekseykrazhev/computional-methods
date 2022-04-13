@@ -7,8 +7,9 @@ make: *** No rule to make target 'all'.  Stop.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Mon Apr 11 22:40:33 2022
+# Make data base, printed on Tue Apr 12 19:37:04 2022
 
 # Variables
 
@@ -41,7 +42,7 @@ GDMSESSION = ubuntu
 # environment
 XMODIFIERS = @im=ibus
 # makefile
-CURDIR := /home/alex/Desktop/study/4 sem/MV/lab1
+CURDIR := /home/alex/Desktop/study/4 sem/computional-methods/lab1
 # makefile
 SHELL = /bin/sh
 # environment
@@ -49,7 +50,7 @@ VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:46286
+JOURNAL_STREAM = 8:44599
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile
@@ -65,19 +66,19 @@ MAKELEVEL := 0
 # environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=c9c23e0f290af2f1b92e4f6f625482da
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=02c145aff58789bed603026862551fd1
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
 _ = /usr/bin/code
 # environment
-MANAGERPID = 1523
+MANAGERPID = 1452
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
 LC_NAME = en_GB.UTF-8
 # environment
-VSCODE_CWD = /home/alex/Desktop/study/4 sem/MV/lab1
+VSCODE_CWD = /home/alex/Desktop/study/4 sem/computional-methods/lab1
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -85,7 +86,7 @@ PATH = /home/alex/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/AVOCADOBOOK:@/tmp/.ICE-unix/1757,unix/AVOCADOBOOK:/tmp/.ICE-unix/1757
+SESSION_MANAGER = local/AVOCADOBOOK:@/tmp/.ICE-unix/1669,unix/AVOCADOBOOK:/tmp/.ICE-unix/1669
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -95,7 +96,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 220b5169909d41818da7afd3b95845e4
+INVOCATION_ID = 11a3db0b61534c8990aef920860635a8
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -111,11 +112,11 @@ DISPLAY = :0
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /home/alex/Desktop/study/4 sem/MV/lab1
+PWD = /home/alex/Desktop/study/4 sem/computional-methods/lab1
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1720
+SSH_AGENT_PID = 1632
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -129,6 +130,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 VSCODE_CLI = 1
 # environment
+ 
 VSCODE_CODE_CACHE_PATH = /home/alex/.config/Code/CachedData/e18005f0f1b33c29e81d732535d8c0e47cafb0b5
 # environment
 LOGNAME = alex
@@ -159,7 +161,7 @@ SHLVL = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-7e0eb88a-81ca-4d49-86f9-c1cc6d855f52.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-14e01529-741b-48be-9cb5-5f1db17d0384.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -211,11 +213,11 @@ LC_ALL = C
 # environment
 DBUS_STARTER_BUS_TYPE = session
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/410472cb_ff81_4e86_b3f0_e3c3a79351fa
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/5e6fd4bd_bc33_4e91_97cf_ba61670308f3
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.121
+GNOME_TERMINAL_SERVICE = :1.353
 # default
 SUFFIXES := 
 # environment
@@ -235,9 +237,9 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 3990
+VSCODE_PID = 13134
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=c9c23e0f290af2f1b92e4f6f625482da
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=02c145aff58789bed603026862551fd1
 # variable set hash-table stats:
 # Load=113/1024=11%, Rehash=0, Collisions=18/135=13%
 
@@ -247,9 +249,10 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=c9c23e0f290af2f1b92e4f6
 
 # Directories
 
-# . (device 2058, inode 788195): 5 files, no impossibilities.
+# . (device 2058, inode 525971): 6 files, no impossibilities.
 
-# 5 files, no impossibilities in 1 directories.
+ 
+# 6 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -292,7 +295,6 @@ GNUmakefile:
 #  Failed to be updated.
 
 # files hash-table stats:
- 
 # Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
 # VPATH Search Paths
 
@@ -300,12 +302,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 13 / storage = 112 B / avg = 8 B
-# current buf: size = 8162 B / used = 112 B / count = 13 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 14 / storage = 144 B / avg = 10 B
+# current buf: size = 8162 B / used = 144 B / count = 14 / avg = 10 B
 
-# strcache performance: lookups = 16 / hit rate = 18%
+# strcache performance: lookups = 17 / hit rate = 17%
 # hash-table stats:
-# Load=13/8192=0%, Rehash=0, Collisions=1/16=6%
-# Finished Make data base on Mon Apr 11 22:40:33 2022
+# Load=14/8192=0%, Rehash=0, Collisions=1/17=6%
+# Finished Make data base on Tue Apr 12 19:37:04 2022
 
  
