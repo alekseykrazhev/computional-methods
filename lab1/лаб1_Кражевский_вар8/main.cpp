@@ -639,7 +639,7 @@ double Norm(const std::vector<double> &a)
 
 int main()
 {
-    const int size = 256;
+    const int size = 3;
     std::vector<std::vector<double>> matrix(size, std::vector<double>(size));
     std::vector<double> vec(size);
     std::vector<double> mult(size);
