@@ -1,2 +1,0 @@
-Time tests:
-Time for QR algorithm (test1): 69.9826 s
