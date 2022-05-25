@@ -1,0 +1,5 @@
+Time tests:
+Time for QR algorithm (10x10): 0.189409 s
+Time for QR algorithm (20x20): 1.58064 s
+Time for QR algorithm (30x30): 5.70369 s
+Time for QR algorithm (40x40): 15.0682 s

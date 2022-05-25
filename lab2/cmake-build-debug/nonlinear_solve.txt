@@ -1,0 +1,25 @@
+Nonlinear solve:
+Number of iterations for bisection method: 12
+Time elapsed for bisection method: 0.0137498 s
+Interval found by bisection method: [-1.952026367187500, -1.951904296875000]
+Number of iterations for Newton method: 3
+Time elapsed for Newton method: 0.000442200000000 s
+x1 = -1.951912836104470
+
+ -------------------------------------------------- 
+
+Number of iterations for bisection method: 12
+Time elapsed for bisection method: 0.000007100000000 s
+Interval found by bisection method: [-1.135864257812500, -1.135742187500000]
+Number of iterations for Newton method: 4
+Time elapsed for Newton method: 0.000004000000000 s
+x2 = -1.135756464235723
+
+ -------------------------------------------------- 
+
+Number of iterations for bisection method: 13
+Time elapsed for bisection method: 0.000010400000000 s
+Interval found by bisection method: [1.951904296875000, 1.952026367187500]
+Number of iterations for Newton method: 4
+Time elapsed for Newton method: 0.000003900000000 s
+x3 = 1.951914830924147
